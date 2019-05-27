@@ -1,0 +1,178 @@
+<html>
+<meta charset="UTF-8">
+   <head>
+      <title>Structure de la Terre</title>
+      <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+      <style>
+         svg rect {
+            fill: gray;
+         }
+         
+         svg text {
+            fill: rgb(255, 196, 0);
+            font: 12px sans-serif;
+            text-anchor: start;
+         }
+
+         h1 {
+            text-align: center;
+         }
+      </style>
+   </head>
+
+   <body>
+      <h1>Structure de la Terre</h1>
+      <div id="continent"></div>
+      <div id="manteau-superieur"></div>
+      <div id="manteau-inferieur"></div>
+      <div id="noyau-externe"></div>
+      <div id="noyau-interne"></div>
+      <script>
+         var data = [0, 6371, 6221, 6216, 5516, 3886, 1216, 0];
+         
+         var width = 1200 
+            scaleFactor = 20, 
+            barHeight = 30;
+         
+         var cont = d3.select("#continent")
+         .style("width", "15%")
+         .style("height", "auto")
+         .style("background-color", "rgb(155, 120, 0)")
+         .style("position", "absolute")
+         .style("right", "10%")
+         .style("top", "30%")
+         .style("border-radius", "10px")
+         .style("display", "none")
+         
+         .append("h1")
+         .text("Croûte terrestre");
+
+         var cont = d3.select("#continent")
+         .append("p")
+         .text("La croûte terrestre représente environ 1,5 % du volume de la Terre solide, 4,4 ‰ de la masse terrestre et 6,5 ‰ de la masse silicatée de la Terre (la Terre sans le noyau métallique)");
+
+         var ms = d3.select("#manteau-superieur")
+         .style("width", "15%")
+         .style("height", "auto")
+         .style("background-color", "rgb(107, 214, 0)")
+         .style("position", "absolute")
+         .style("right", "10%")
+         .style("top", "30%")
+         .style("border-radius", "10px")
+         .style("display", "none")
+         
+         .append("h1")
+         .text("Manteau supérieur");
+
+         var ms = d3.select("#manteau-superieur")
+         .append("p")
+         .text("Le manteau supérieur est moins visqueux (plus ductile) que le manteau inférieur : les contraintes physiques qui y règnent le rendent en partie plastique. Il est formé essentiellement de roches telles que la péridotite.");
+
+         var mi = d3.select("#manteau-inferieur")
+         .style("width", "15%")
+         .style("height", "auto")
+         .style("background-color", "rgb(252, 255, 0")
+         .style("position", "absolute")
+         .style("right", "10%")
+         .style("top", "30%")
+         .style("border-radius", "10px")
+         .style("display", "none")
+         
+         .append("h1")
+         .text("Manteau inférieur");
+
+         var mi = d3.select("#manteau-inferieur")
+         .append("p")
+         .text("Le manteau inférieur a des propriétés solides aux échelles de temps inférieures à l'année, et plastiques aux échelles de temps supérieures au siècle.");
+
+         var ne = d3.select("#noyau-externe")
+         .style("width", "15%")
+         .style("height", "auto")
+         .style("background-color", "rgb(255, 199, 0")
+         .style("position", "absolute")
+         .style("right", "10%")
+         .style("top", "30%")
+         .style("border-radius", "10px")
+         .style("display", "none")
+         
+         .append("h1")
+         .text("Noyau externe");
+
+         var ne = d3.select("#noyau-externe")
+         .append("p")
+         .text("Le noyau externe est liquide. Il est essentiellement composé de fer à 80-85 %, d'environ 10-12 % d'un élément léger non encore déterminé parmi le soufre, l'oxygène, le silicium et le carbone (ou un mélange des quatre)1,2, et enfin de l'ordre de 5 % de nickel. Sa viscosité est estimée entre 1 et 100 fois celle de l’eau, sa température moyenne atteint 4 000 degrés Celsius et sa densité 10.");
+
+         var ni = d3.select("#noyau-interne")
+         .style("width", "15%")
+         .style("height", "auto")
+         .style("background-color", "rgb(255, 95, 0")
+         .style("position", "absolute")
+         .style("right", "10%")
+         .style("top", "30%")
+         .style("border-radius", "10px")
+         .style("display", "none")
+         
+         .append("h1")
+         .text("Noyau interne");
+
+         var ni = d3.select("#noyau-interne")
+         .append("p")
+         .text("Le noyau interne, aussi appelé graine, est une boule solide. Elle est essentiellement métallique (environ 80 % d'alliages de fer et 20 % de nickel) et constituée par cristallisation progressive du noyau externe. La pression, qui est de 3,5 millions de bars (350 gigapascals), le maintient dans un état solide malgré une température supérieure à 6000 °C3 et une densité d’environ 13");
+
+         var graph = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", barHeight * data.length * 4)
+            .style("margin-left", "30%")
+            .style("position", "absolute")
+            .style("top", "-5%");
+
+         var dd = graph.selectAll("div")
+            .append("div")
+            .attr("class", function(d, i) {return i})
+            .style("width", "200px")
+            .style("height", "600px")
+            .style("background-color", "blue");
+         
+         var bar = graph.selectAll("g")
+            .data(data)
+            .enter()
+            .append("g")
+            .attr("class", function(d, i) {return i})
+            .attr("transform", function(d, i) {
+               return "translate(350,500)";
+            });
+         bar.append("circle")
+         .attr("r", function(d) {
+            return d / 20;
+         })
+         .attr("class", function(d, i) {return i})
+         .style("fill", function(d) {                                //[6371, 6221, 6216, 5516, 3886, 1216, 0];
+         if (d > 6221) {return "rgb(156, 124, 95)"} 
+         else if (d < 6221 && d >= 6216) {return "rgb(107, 214, 95)"} 
+         else if (d < 6216 && d >= 5516) {return "rgb(252, 255, 95)"} 
+         else if (d < 5516 && d >= 3886) {return "rgb(255, 199, 95)"}
+         else if (d < 3886 && d >= 1216) {return "rgb(255, 95, 95)"}
+         else { return "aqua" }             
+      ;}) 
+         .on("mouseover", function (d) {
+         if (d > 6221) {d3.select(this).style("fill", "rgb(155, 120, 0)"); d3.select("#continent").style("display", "block");} 
+         else if (d < 6221 && d >= 6216) {d3.select(this).style("fill", "rgb(107, 214, 0"); d3.select("#manteau-superieur").style("display", "block");} 
+         else if (d < 6216 && d >= 5516) {d3.select(this).style("fill", "rgb(252, 255, 0"); d3.select("#manteau-inferieur").style("display", "block");} 
+         else if (d < 5516 && d >= 3886) {d3.select(this).style("fill", "rgb(255, 199, 0"); d3.select("#noyau-externe").style("display", "block");}
+         else if (d < 3886 && d >= 1216) {d3.select(this).style("fill", "rgb(255, 95, 0"); d3.select("#noyau-interne").style("display", "block");}
+         })
+         .on("mouseout", function (d) {
+         if (d > 6221) {d3.select(this).style("fill", "rgb(155, 120, 95)"); d3.select("#continent").style("display", "none");} 
+         else if (d < 6221 && d >= 6216) {d3.select(this).style("fill", "rgb(107, 214, 95"); d3.select("#manteau-superieur").style("display", "none");} 
+         else if (d < 6216 && d >= 5516) {d3.select(this).style("fill", "rgb(252, 255, 95"); d3.select("#manteau-inferieur").style("display", "none");} 
+         else if (d < 5516 && d >= 3886) {d3.select(this).style("fill", "rgb(255, 199, 95"); d3.select("#noyau-externe").style("display", "none");}
+         else if (d < 3886 && d >= 1216) {d3.select(this).style("fill", "rgb(255, 95, 95"); d3.select("#noyau-interne").style("display", "none");}
+      })
+         
+         .attr("height", barHeight - 1);
+         
+        
+      </script>
+   </body>
+</html>
